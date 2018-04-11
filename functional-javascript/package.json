@@ -1,0 +1,9 @@
+{
+  "name": "functional-javascript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "immutable-ext": "^1.1.5"
+  }
+}
