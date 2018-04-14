@@ -5,5 +5,11 @@
   "license": "MIT",
   "dependencies": {
     "immutable-ext": "^1.1.5"
+  },
+  "devDependencies": {
+    "jest": "^22.4.3"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }
