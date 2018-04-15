@@ -1,4 +1,4 @@
-const { fromNullable, Right, Left } = require("../src/either");
+const { fromNullable, Right, Left, Either } = require("../src/either");
 
 const id = x => x;
 
@@ -10,13 +10,13 @@ expect.extend({
       return {
         message: () =>
           `expected ${received} to not be a Right with the value ${argument}`,
-        pass: true
+        pass: true,
       };
     } else {
       return {
         message: () =>
           `expected ${received.inspect()} to be a Right with the value ${argument}`,
-        pass: false
+        pass: false,
       };
     }
   },
@@ -27,13 +27,13 @@ expect.extend({
       return {
         message: () =>
           `expected ${received} to not be a Left with the value ${argument}`,
-        pass: true
+        pass: true,
       };
     } else {
       return {
         message: () =>
           `expected ${received.inspect()} to be a Left with the value ${argument}`,
-        pass: false
+        pass: false,
       };
     }
   },
@@ -44,16 +44,16 @@ expect.extend({
       return {
         message: () =>
           `expected ${received} to not be an Either matching ${argument}`,
-        pass: true
+        pass: true,
       };
     } else {
       return {
         message: () =>
           `expected ${received} to be an Either matching ${argument}`,
-        pass: false
+        pass: false,
       };
     }
-  }
+  },
 });
 
 describe("fromNullable", () => {
@@ -67,7 +67,7 @@ describe("fromNullable", () => {
 });
 
 describe("Right", () => {
-  const aRight = Right.of(1);
+  const aRight = Either.of(1);
 
   const join = m => m.chain(id);
   const addOne = x => x + 1;
@@ -77,7 +77,7 @@ describe("Right", () => {
 
   test("Functor function composition law holds", () => {
     expect(aRight.map(addOne).map(divideByTwo)).toMatchEither(
-      aRight.map(x => divideByTwo(addOne(x)))
+      aRight.map(x => divideByTwo(addOne(x))),
     );
   });
 
@@ -86,16 +86,16 @@ describe("Right", () => {
   });
 
   test("Monad join associative law holds", () => {
-    const nestedMonad = Right.of(Right.of(aRight));
+    const nestedMonad = Either.of(Either.of(aRight));
 
     expect(join(nestedMonad.map(join))).toMatchEither(
-      join(join(nestedMonad))
+      join(join(nestedMonad)),
     );
   });
 
   test("Monad box and join combination law holds", () => {
-    expect(join(Right.of(aRight))).toMatchEither(
-      join(aRight.map(Right))
+    expect(join(Either.of(aRight))).toMatchEither(
+      join(aRight.map(Right)),
     );
   });
 });
